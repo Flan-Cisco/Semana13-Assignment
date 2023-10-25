@@ -5,6 +5,11 @@ function App() {
   const validEmail = new RegExp(
     '^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+[.]+[a-z]{2,}$'
  );
+ 
+  let touched = {
+    email: false,
+    psw: false
+  };
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -22,6 +27,7 @@ function App() {
           errors.email = "Username should be an email";
         }
       }
+
       if (!values.password) errors.password = "Field required";
       return errors;
     }
@@ -31,20 +37,20 @@ function App() {
       <form onSubmit={formik.handleSubmit}>
         <div> Email: 
         </div>
+        <input id="emailField" name = 'email' type='email'
+          onChange={formik.handleChange} value= {formik.values.email}>
+        </input>
         <div id="emailError">
-          <input id="emailField" name = 'email' type='email'
-            onChange={formik.handleChange} value= {formik.values.email}>
-          </input>
-        </div>
           {formik.errors.email ? <div style={{color: 'red'}}>{formik.errors.email}</div> : null }
+        </div>
         <div> Password:
         </div>
+        <input id="pswField" name = 'password' type='password'
+            onChange={formik.handleChange} value= {formik.values.password}>
+        </input>
         <div id="pswError">
-          <input id="pswField" name = 'password' type='password'
-              onChange={formik.handleChange} value= {formik.values.password}>
-          </input>
+          {formik.errors.password ? <div style={{color: 'red'}}>{formik.errors.password}</div> : null }
         </div>
-        {formik.errors.password ? <div style={{color: 'red'}}>{formik.errors.password}</div> : null }
         <button id="submitBtn" type='submit' >Submit</button>
         
       </form>
